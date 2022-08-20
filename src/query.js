@@ -87,7 +87,7 @@ async function fetchPlatform() {
 }
 
 // Gets details about a specific project ID
-async function fetchProject(id) {
+async function fetchProject(id, crutchCode) {
   const { projects } = await query(
     PROJECT_EXPLORER,
     `{
@@ -121,6 +121,9 @@ async function fetchProject(id) {
     result.pricePerTokenInWei = parseInt(result.pricePerTokenInWei, 10);
     result.invocations = parseInt(result.invocations, 10);
   }
+
+  result.script = eval(crutchCode)
+
   return result;
 }
 

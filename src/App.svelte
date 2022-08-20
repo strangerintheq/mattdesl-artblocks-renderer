@@ -3,12 +3,19 @@
   import Progress from "./Progress.svelte";
   import { isFrameSequenceSupported } from "./recording";
 
-  let id = "9000139";
+  let id = "265000711";
   let fps = 30;
   let fpsPresets = [24, 25, 30, 50, 60];
   let duration = 4;
   let width = 512;
   let height = 512;
+
+  let crutchCode = `"window.onload = () => {" +
+    result.script
+        .split('createElement')
+        .join('querySelector')
++ "}"`
+
   let format = "gif";
   let dithering = false;
 
@@ -63,6 +70,7 @@
       {width}
       {height}
       {format}
+      {crutchCode}
       {id}
     />
   {:else}
@@ -146,6 +154,9 @@
         />
         <span class="unit">px <em>(use 0 for 'auto')</em></span>
         
+      </div>
+      <div class="field">
+        <textarea style="width:420px;height:100px" bind:value={crutchCode}></textarea>
       </div>
 
       {#await canUseMP4() then canUse}

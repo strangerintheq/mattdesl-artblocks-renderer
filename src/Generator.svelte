@@ -14,6 +14,7 @@
 
   export let id = "0";
   export let fps = 30;
+  export let crutchCode = '';
   export let width = 1080;
   export let height = 1080;
   export let format = "mp4";
@@ -94,7 +95,7 @@
   });
 
   async function start(id) {
-    const data = await fetchData(id);
+    const data = await fetchData(id, crutchCode);
 
     const autoWidth = !width;
     const autoHeight = !height;
@@ -116,7 +117,7 @@
       }
     }
 
-    let opts = { width, height, fps, totalFrames, dithering };
+    let opts = { width, height, fps, totalFrames, dithering, crutchCode };
     if (format === "mp4") encoder = await createMP4Encoder(opts);
     else if (format === "png") encoder = await createPNGEncoder(opts);
     else if (format === "frames")
@@ -168,7 +169,7 @@
     }
     const C = 1000000;
     const projNumber = Math.floor(idNum / C);
-    const project = await fetchProject(projNumber);
+    const project = await fetchProject(projNumber, crutchCode);
     const token = await fetchToken(id);
     return {
       id,
